@@ -1,12 +1,21 @@
-import { Telegraf } from 'telegraf';
 import { config } from 'dotenv';
+import mongoose from 'mongoose';
+import setupBot from './bot.js';
 
 config({ path: './config/.env' });
 
-const bot = new Telegraf(process.env.BOT_TOKEN);
+(async function () {
+  try {
+    await mongoose
+      .connect(process.env.DB_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        dbName: 'telegram',
+      })
+      .then(() => console.log('Connected to MongoDB'));
 
-bot.command('start', (ctx) => {
-  ctx.reply(`Рад видеть вас, ${ctx.from.first_name}!`);
-});
-
-bot.launch();
+    setupBot().launch();
+  } catch (error) {
+    console.log('Ошибка запуска', error);
+  }
+})();
