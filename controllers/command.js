@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Input } from 'telegraf';
 import getRandomCat from '../services/getRandomCat.js';
 import getRandomDog from '../services/getRandomDog.js';
@@ -15,4 +14,8 @@ export const cat = async (ctx) => {
 export const dog = async (ctx) => {
   const image = await getRandomDog();
   await ctx.replyWithPhoto(Input.fromURL(image));
-}
+};
+
+export const weather = async (ctx) => {
+  return ctx.scene.enter('GET_WEATHER_BY_CITY');
+};

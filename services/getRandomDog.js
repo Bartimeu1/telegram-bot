@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { DOG_API } from '../config/consts.js';
+import { DOG_URL } from '../config/consts.js';
 
 const getRandomDog = async () => {
   try {
-    const response = await axios({ url: DOG_API, method: 'get' });
+    const response = await axios({ url: DOG_URL, method: 'get' });
 
     return response.data.message;
   } catch (error) {
