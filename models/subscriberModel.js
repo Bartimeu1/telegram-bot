@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const subscriberSchema = new mongoose.Schema({
-  chatID: { type: String },
+  chatID: { type: Number },
   city: { type: String },
 });
 

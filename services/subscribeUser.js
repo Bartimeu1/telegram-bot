@@ -1,13 +1,16 @@
-import Subscriber from '../models/subscriber-model.js';
+import Subscriber from '../models/subscriberModel.js';
 
-const subscribeUser = async (chatId, city) => {
-  const candidate = await Subscriber.findOne({ chatId });
-  if (candidate) {
-    throw new Error(`Пользователь с ${chatId} уже подписан`);
+const subscribeUser = async (chatID, city) => {
+  try {
+    const isSubscribed = await Subscriber.findOne({ chatID });
+    if (!isSubscribed) {
+      const subscriber = new Subscriber({ chatID, city });
+      subscriber.save();
+    }
+    return isSubscribed;
+  } catch (error) {
+    console.log('Ошибка при обращении к БД', error);
   }
-
-  const subscriber = new Subscriber(chatId, city);
-  subscriber.save();
 };
 
 export default subscribeUser;

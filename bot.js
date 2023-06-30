@@ -1,8 +1,8 @@
 import { config } from 'dotenv';
 import { Scenes, Telegraf, session } from 'telegraf';
 import { start, cat, dog, weather, subscribe } from './controllers/command.js';
-import weatherScene from './controllers/scenes/weather-scene.js';
-import subscribeScene from './controllers/scenes/subscribe-scene.js';
+import weatherScene from './scenes/weatherScene.js';
+import subscribeScene from './scenes/subscribeScene.js';
 
 config({ path: './config/.env' });
 
