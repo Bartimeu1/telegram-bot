@@ -19,8 +19,8 @@ weatherScene.on('message', async (ctx) => {
   }
 });
 
-export default weatherScene;
-
 weatherScene.hears('message', ctx => {
   ctx.scene.leave();
 })
+
+export default weatherScene;

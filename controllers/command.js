@@ -19,3 +19,7 @@ export const dog = async (ctx) => {
 export const weather = async (ctx) => {
   return ctx.scene.enter('GET_WEATHER_BY_CITY');
 };
+
+export const subscribe = async (ctx) => {
+  return ctx.scene.enter('SUBSCRIBE_USER');
+};
