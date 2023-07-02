@@ -2,9 +2,10 @@ import { config } from 'dotenv';
 import { Scenes, Telegraf, session } from 'telegraf';
 import { start, cat, dog, weather, subscribe } from './controllers/command.js';
 
-// Scenes
 import weatherScene from './scenes/weatherScene.js';
 import subscribeScene from './scenes/subscribeScene.js';
+
+import weatherSchedule from './controllers/weatherSchedule.js';
 
 config({ path: './config/.env' });
 
@@ -23,6 +24,9 @@ const setupBot = () => {
   bot.command('weather', weather);
   bot.command('subscribe', subscribe);
 
+  // schedules
+  weatherSchedule(bot);
+  
   process.once('SIGINT', () => bot.stop('SIGINT'));
   process.once('SIGTERM', () => bot.stop('SIGTERM'));
 
