@@ -1,6 +1,6 @@
 import Subscriber from '../models/subscriberModel.js';
 
-const subscribeUser = async (chatID, city) => {
+const addSubscribe = async (chatID, city) => {
   try {
     const isSubscribed = await Subscriber.findOne({ chatID });
     if (!isSubscribed) {
@@ -13,4 +13,4 @@ const subscribeUser = async (chatID, city) => {
   }
 };
 
-export default subscribeUser;
+export default addSubscribe;

@@ -1,9 +1,13 @@
 import { Input } from 'telegraf';
+import addUser from '../services/addUser.js';
 import getRandomCat from '../services/getRandomCat.js';
 import getRandomDog from '../services/getRandomDog.js';
 
-export const start = (ctx) => {
-  ctx.reply(`Рад видеть вас, ${ctx.from.first_name}!`);
+export const start = async (ctx) => {
+  const user = await addUser(ctx.message.from.id, ctx.from.first_name);
+  ctx.reply(
+    user ? `Рад видеть вас снова, ${user.nickname}` : `Рад знакомству, ${ctx.from.first_name}!`,
+  );
 };
 
 export const cat = async (ctx) => {
