@@ -27,3 +27,7 @@ export const weather = async (ctx) => {
 export const subscribe = async (ctx) => {
   return ctx.scene.enter('SUBSCRIBE_USER');
 };
+
+export const task = async (ctx) => {
+  return ctx.scene.enter('CREATE_TASK');
+}
