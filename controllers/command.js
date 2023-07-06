@@ -1,13 +1,19 @@
 import { Input } from 'telegraf';
-import addUser from '../services/addUser.js';
-import getRandomCat from '../services/getRandomCat.js';
-import getRandomDog from '../services/getRandomDog.js';
+
+import isUserRegistered from '../services/user/isUserRegistered.js';
+import addUser from '../services/user/addUser.js';
+import getRandomCat from '../services/api/getRandomCat.js';
+import getRandomDog from '../services/api/getRandomDog.js';
 
 export const start = async (ctx) => {
-  const user = await addUser(ctx.message.from.id, ctx.from.first_name);
-  ctx.reply(
-    user ? `Рад видеть вас снова, ${user.nickname}` : `Рад знакомству, ${ctx.from.first_name}!`,
-  );
+  console.log(ctx);
+  const familiar = await isUserRegistered(ctx.message.chat.id);
+  if (!familiar) {
+    ctx.reply(`Рад знакомству, ${ctx.from.first_name}! 🫡`);
+    addUser(ctx.message.chat.id, ctx.from.first_name);
+  } else {
+    ctx.reply(`Рад видеть вас снова, ${familiar.nickname} 🫡`);
+  }
 };
 
 export const cat = async (ctx) => {
@@ -28,6 +34,10 @@ export const subscribe = async (ctx) => {
   return ctx.scene.enter('SUBSCRIBE_USER');
 };
 
+export const unsubscribe = async (ctx) => {
+  return ctx.scene.enter('UNSUBSCRIBE_USER');
+};
+
 export const task = async (ctx) => {
   return ctx.scene.enter('CREATE_TASK');
-}
+};

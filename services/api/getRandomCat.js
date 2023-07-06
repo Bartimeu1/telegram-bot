@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CAT_URL } from '../config/consts.js';
+import { CAT_URL } from '../../config/consts.js';
 
 const getRandomCat = async () => {
   try {
