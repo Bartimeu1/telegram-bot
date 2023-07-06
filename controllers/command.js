@@ -6,7 +6,6 @@ import getRandomCat from '../services/api/getRandomCat.js';
 import getRandomDog from '../services/api/getRandomDog.js';
 
 export const start = async (ctx) => {
-  console.log(ctx);
   const familiar = await isUserRegistered(ctx.message.chat.id);
   if (!familiar) {
     ctx.reply(`Рад знакомству, ${ctx.from.first_name}! 🫡`);

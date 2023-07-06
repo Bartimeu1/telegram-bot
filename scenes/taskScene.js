@@ -6,7 +6,11 @@ import { dateRegex } from '../config/consts.js';
 const taskScene = new Scenes.WizardScene(
   'CREATE_TASK',
   (ctx) => {
-    ctx.reply('📝 Введите текст задачи 📝');
+    ctx.reply('📝 Введите текст задачи 📝', {
+      reply_markup: {
+        inline_keyboard: [[{ text: '❌ Отменить действие ❌', callback_data: 'cancel' }]],
+      },
+    });
     ctx.scene.session.task = {};
 
     return ctx.wizard.next();
@@ -46,5 +50,12 @@ const taskScene = new Scenes.WizardScene(
     return ctx.scene.leave();
   },
 );
+
+taskScene.action('cancel', (ctx) => {
+  ctx.editMessageReplyMarkup();
+
+  ctx.reply('Вы отменили действие\n');
+  ctx.scene.leave();
+});
 
 export default taskScene;
