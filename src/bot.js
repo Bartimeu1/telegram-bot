@@ -4,6 +4,7 @@ import { Scenes, Telegraf, session } from 'telegraf';
 // Commands imports
 import {
   start,
+  help,
   cat,
   dog,
   weather,
@@ -49,6 +50,7 @@ const setupBot = () => {
 
   // commands
   bot.start(start);
+  bot.command('help', help)
   bot.command('cat', cat);
   bot.command('dog', dog);
   bot.command('weather', weather);

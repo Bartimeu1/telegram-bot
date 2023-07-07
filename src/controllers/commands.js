@@ -1,5 +1,7 @@
 import { Input } from 'telegraf';
 
+import { helpMessage } from '../constants/text.js';
+
 import isUserRegistered from '../services/user/isUserRegistered.js';
 import addUser from '../services/user/addUser.js';
 import getRandomCat from '../services/api/getRandomCat.js';
@@ -13,6 +15,10 @@ export const start = async (ctx) => {
   } else {
     ctx.reply(`Рад видеть вас снова, ${familiar.nickname} 🫡`);
   }
+};
+
+export const help = async (ctx) => {
+  ctx.reply(helpMessage);
 };
 
 export const cat = async (ctx) => {
