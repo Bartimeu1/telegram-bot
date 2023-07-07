@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { DOG_URL } from '../../config/consts.js';
+import { DOG_URL } from '../../constants/urls.js';
 
 const getRandomDog = async () => {
   try {

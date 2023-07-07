@@ -1,6 +1,6 @@
 import { Scenes } from 'telegraf';
 
-import { timeRegex } from '../config/consts.js';
+import { timeRegex } from '../constants/regex.js';
 import addSubscriber from '../services/subscriber/addSubscriber.js';
 import isSubscribed from '../services/subscriber/isSubscribed.js';
 import getWeather from '../services/api/getWeather.js';

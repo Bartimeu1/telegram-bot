@@ -11,7 +11,7 @@ import {
   unsubscribe,
   task,
   recommend,
-} from './controllers/command.js';
+} from './controllers/commands.js';
 
 // Scenes imports
 import weatherScene from './scenes/weatherScene.js';
@@ -24,10 +24,10 @@ import placesScene from './scenes/placesScene.js';
 import landmarksScene from './scenes/landmarksScene.js';
 
 // Schedules imports
-import weatherSchedule from './controllers/weatherSchedule.js';
-import taskSchedule from './controllers/taskSchedule.js';
+import weatherSchedule from './controllers/schedules/weatherSchedule.js';
+import taskSchedule from './controllers/schedules/taskSchedule.js';
 
-config({ path: './config/.env' });
+config({ path: '.env' });
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 

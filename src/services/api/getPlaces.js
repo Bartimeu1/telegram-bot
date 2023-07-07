@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { config } from 'dotenv';
-import { PLACES_URL } from '../../config/consts.js';
+import { PLACES_URL } from '../../constants/urls.js';
 
-config({ path: '../config/.env' });
+config({ path: '.env' });
 
 const getPlaces = async (city) => {
   const params = {
-    query: 'attractions',
+    query: 'coffee',
     near: city,
     open_now: 'true',
     limit: 5,

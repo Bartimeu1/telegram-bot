@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { config } from 'dotenv';
-import { HOLIDAYS_URL } from '../../config/consts.js';
+import { HOLIDAYS_URL } from '../../constants/urls.js';
 
-config({ path: '../config/.env' });
+config({ path: '.env' });
 
 const getEvents = async (country) => {
   const url = `${HOLIDAYS_URL}=${country}&year=2023&limit=5`;

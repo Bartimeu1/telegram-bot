@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { config } from 'dotenv';
-import { WEATHER_URL } from '../../config/consts.js';
+import { WEATHER_URL } from '../../constants/urls.js';
 
-config({ path: '../config/.env' });
+config({ path: '.env' });
 
 const getWeather = async (city) => {
   try {

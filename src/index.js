@@ -2,7 +2,7 @@ import { config } from 'dotenv';
 import mongoose from 'mongoose';
 import setupBot from './bot.js';
 
-config({ path: './config/.env' });
+config({ path: '.env' });
 
 (async function () {
   try {
