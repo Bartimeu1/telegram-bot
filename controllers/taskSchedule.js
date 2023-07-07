@@ -13,7 +13,7 @@ const taskSchedule = (bot) => {
     try {
       Task.find({ callDate: { $lte: currentDate } }).then((tasks) => {
         tasks.forEach((task) => {
-          bot.telegram.sendMessage(task.chatID, `Напоминание!\n ${task.text}`);
+          bot.telegram.sendMessage(task.chatID, `Напоминание! ⏰\n${task.text}`);
         });
       });
       await Task.deleteMany({ callDate: { $lte: currentDate } });

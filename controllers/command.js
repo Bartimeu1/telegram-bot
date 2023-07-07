@@ -40,3 +40,7 @@ export const unsubscribe = async (ctx) => {
 export const task = async (ctx) => {
   return ctx.scene.enter('CREATE_TASK');
 };
+
+export const recommend = async (ctx) => {
+  return ctx.scene.enter('RECOMMEND');
+};
