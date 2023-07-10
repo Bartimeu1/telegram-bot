@@ -18,7 +18,8 @@ import {
 import weatherScene from './scenes/weatherScene.js';
 import subscribeScene from './scenes/subscribeScene.js';
 import unsubscribeScene from './scenes/unsubscribeScene.js';
-import taskScene from './scenes/taskScene.js';
+import tasksScene from './scenes/tasksScene.js';
+import addTaskScene from './scenes/addTaskScene.js';
 import recommendScene from './scenes/recommendScene.js';
 import eventsScene from './scenes/eventsScene.js';
 import placesScene from './scenes/placesScene.js';
@@ -36,7 +37,8 @@ const stage = new Scenes.Stage([
   weatherScene,
   subscribeScene,
   unsubscribeScene,
-  taskScene,
+  tasksScene,
+  addTaskScene,
   recommendScene,
   eventsScene,
   placesScene,
@@ -50,7 +52,7 @@ const setupBot = () => {
 
   // commands
   bot.start(start);
-  bot.command('help', help)
+  bot.command('help', help);
   bot.command('cat', cat);
   bot.command('dog', dog);
   bot.command('weather', weather);

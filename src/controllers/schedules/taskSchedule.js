@@ -11,12 +11,18 @@ const taskSchedule = (bot) => {
   schedule.scheduleJob(rule, async () => {
     const currentDate = new Date();
     try {
-      Task.find({ callDate: { $lte: currentDate } }).then((tasks) => {
-        tasks.forEach((task) => {
-          bot.telegram.sendMessage(task.chatID, `Напоминание! ⏰\n${task.text}`);
-        });
-      });
-      await Task.deleteMany({ callDate: { $lte: currentDate } });
+      const reminderTasks = await Task.find({ callDate: { $lte: currentDate } });
+      if (reminderTasks) {
+        for (const reminderTask of reminderTasks) {
+          await bot.telegram.sendMessage(
+            reminderTask.chatID,
+            `Напоминание! ⏰\n${reminderTask.text}`,
+          );
+        }
+        await Task.updateMany({ callDate: { $lte: currentDate } }, { $unset: { callDate: '' } });
+      }
+
+      await Task.deleteMany({ date: { $lte: currentDate } });
     } catch (err) {
       console.log('Ошибка при рассылке уведомлений', err);
     }
