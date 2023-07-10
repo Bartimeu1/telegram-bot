@@ -1,7 +1,7 @@
 import { Scenes } from 'telegraf';
 
-import { countryRegex } from '../constants/regex.js';
-import getEvents from '../services/api/getEvents.js';
+import { countryRegex } from '@constants/regex.js';
+import getEvents from '@services/api/getEvents.js';
 
 const eventsScene = new Scenes.WizardScene(
   'GET_EVENTS',

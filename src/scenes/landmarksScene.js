@@ -1,6 +1,6 @@
 import { Scenes } from 'telegraf';
 
-import getLandmarks from '../services/api/getLandmarks.js';
+import getLandmarks from '@services/api/getLandmarks.js';
 
 const landmarksScene = new Scenes.WizardScene(
   'GET_LANDMARKS',

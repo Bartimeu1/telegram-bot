@@ -1,4 +1,4 @@
-import Subscriber from '../../models/subscriberModel.js';
+import Subscriber from '@models/subscriberModel.js';
 
 const isSubscribed = async (chatID) => {
   try {

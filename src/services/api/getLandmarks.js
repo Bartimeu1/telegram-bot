@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { config } from 'dotenv';
-import { PLACES_URL } from '../../constants/urls.js';
+import { PLACES_URL } from '@constants/urls.js';
 
 config({ path: '.env' });
 

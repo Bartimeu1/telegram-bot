@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { config } from 'dotenv';
-import { HOLIDAYS_URL } from '../../constants/urls.js';
+import { HOLIDAYS_URL } from '@constants/urls.js';
 
 config({ path: '.env' });
 

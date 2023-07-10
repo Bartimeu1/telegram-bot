@@ -1,7 +1,7 @@
 import { Scenes } from 'telegraf';
 
-import getTodaysTasks from '../services/task/getTodaysTasks.js';
-import getAllTasks from '../services/task/getAllTasks.js';
+import getTodaysTasks from '@services/task/getTodaysTasks.js';
+import getAllTasks from '@services/task/getAllTasks.js';
 
 import dateFormatting from '../utils/dateFormatting.js';
 

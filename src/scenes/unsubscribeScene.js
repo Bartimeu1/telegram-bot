@@ -1,7 +1,7 @@
 import { Scenes } from 'telegraf';
 
-import isSubscribed from '../services/subscriber/isSubscribed.js';
-import deleteSubscriber from '../services/subscriber/deleteSubscriber.js';
+import isSubscribed from '@services/subscriber/isSubscribed.js';
+import deleteSubscriber from '@services/subscriber/deleteSubscriber.js';
 
 const unsubscribeScene = new Scenes.BaseScene('UNSUBSCRIBE_USER');
 

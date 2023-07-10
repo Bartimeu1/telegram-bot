@@ -1,5 +1,6 @@
 import { config } from 'dotenv';
 import { Scenes, Telegraf, session } from 'telegraf';
+import rateLimit from 'telegraf-ratelimit';
 
 // Commands imports
 import {
@@ -45,10 +46,18 @@ const stage = new Scenes.Stage([
   landmarksScene,
 ]);
 
+// Set limit to 1 message per 3 seconds
+const limitConfig = {
+  window: 3000,
+  limit: 1,
+  onLimitExceeded: (ctx, next) => ctx.reply('Rate limit exceeded')
+}
+
 const setupBot = () => {
   // middleware
   bot.use(session());
   bot.use(stage.middleware());
+  bot.use(rateLimit(limitConfig))
 
   // commands
   bot.start(start);
@@ -65,6 +74,7 @@ const setupBot = () => {
   weatherSchedule(bot);
   taskSchedule(bot);
 
+  // enable graceful stop
   process.once('SIGINT', () => bot.stop('SIGINT'));
   process.once('SIGTERM', () => bot.stop('SIGTERM'));
 

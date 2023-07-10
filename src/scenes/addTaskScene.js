@@ -1,7 +1,7 @@
 import { Scenes } from 'telegraf';
 
-import addTask from '../services/task/addTask.js';
-import { dateRegex } from '../constants/regex.js';
+import addTask from '@services/task/addTask.js';
+import { dateRegex } from '@constants/regex.js';
 
 const addTaskScene = new Scenes.WizardScene(
   'ADD_TASK',

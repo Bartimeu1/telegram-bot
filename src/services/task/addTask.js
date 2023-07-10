@@ -1,4 +1,4 @@
-import Task from '../../models/taskModel.js';
+import Task from '@models/taskModel.js';
 
 const addTask = async (chatID, text, date, callDate) => {
   try {

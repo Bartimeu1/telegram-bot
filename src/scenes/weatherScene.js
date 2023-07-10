@@ -1,5 +1,5 @@
 import { Scenes } from 'telegraf';
-import getWeather from '../services/api/getWeather.js';
+import getWeather from '@services/api/getWeather.js';
 
 const weatherScene = new Scenes.BaseScene('GET_WEATHER_BY_CITY');
 

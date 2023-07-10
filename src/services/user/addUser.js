@@ -1,4 +1,4 @@
-import User from '../../models/userModel.js';
+import User from '@models/userModel.js';
 
 const addUser = async (chatID, nickname) => {
   try {

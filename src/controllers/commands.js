@@ -1,11 +1,11 @@
 import { Input } from 'telegraf';
 
-import { helpMessage } from '../constants/text.js';
+import { helpMessage } from '@constants/text.js';
 
-import isUserRegistered from '../services/user/isUserRegistered.js';
-import addUser from '../services/user/addUser.js';
-import getRandomCat from '../services/api/getRandomCat.js';
-import getRandomDog from '../services/api/getRandomDog.js';
+import isUserRegistered from '@services/user/isUserRegistered.js';
+import addUser from '@services/user/addUser.js';
+import getRandomCat from '@services/api/getRandomCat.js';
+import getRandomDog from '@services/api/getRandomDog.js';
 
 export const start = async (ctx) => {
   const familiar = await isUserRegistered(ctx.message.chat.id);

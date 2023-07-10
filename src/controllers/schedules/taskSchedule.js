@@ -1,5 +1,5 @@
 import schedule from 'node-schedule';
-import Task from '../../models/taskModel.js';
+import Task from '@models/taskModel.js';
 
 // Rules for a schedule
 const rule = new schedule.RecurrenceRule();

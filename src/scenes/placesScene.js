@@ -1,6 +1,6 @@
 import { Scenes } from 'telegraf';
 
-import getPlaces from '../services/api/getPlaces.js';
+import getPlaces from '@services/api/getPlaces.js';
 
 const placesScene = new Scenes.WizardScene(
   'GET_PLACE',

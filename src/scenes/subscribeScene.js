@@ -1,9 +1,9 @@
 import { Scenes } from 'telegraf';
 
-import { timeRegex } from '../constants/regex.js';
-import addSubscriber from '../services/subscriber/addSubscriber.js';
-import isSubscribed from '../services/subscriber/isSubscribed.js';
-import getWeather from '../services/api/getWeather.js';
+import { timeRegex } from '@constants/regex.js';
+import addSubscriber from '@services/subscriber/addSubscriber.js';
+import isSubscribed from '@services/subscriber/isSubscribed.js';
+import getWeather from '@services/api/getWeather.js';
 
 const subscribeScene = new Scenes.WizardScene(
   'SUBSCRIBE_USER',

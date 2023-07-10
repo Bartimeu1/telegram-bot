@@ -1,4 +1,4 @@
-import Subscriber from '../../models/subscriberModel.js';
+import Subscriber from '@models/subscriberModel.js';
 
 const addSubscriber = async (chatID, city, callTime) => {
   try {
