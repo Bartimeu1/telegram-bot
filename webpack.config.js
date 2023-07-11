@@ -7,7 +7,7 @@ const __dirname = path.dirname(__filename);
 export default {
   entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, 'api'),
+    path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.cjs',
   },
   target: 'node',
