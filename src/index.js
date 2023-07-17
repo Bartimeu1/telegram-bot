@@ -1,13 +1,11 @@
-import { config } from 'dotenv';
 import mongoose from 'mongoose';
 import setupBot from './bot.js';
-
-config({ path: '.env' });
+import options from '@root/config.js';
 
 (async function () {
   try {
     await mongoose
-      .connect(process.env.DB_URL, {
+      .connect(options.dbUrl, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         dbName: 'telegram',

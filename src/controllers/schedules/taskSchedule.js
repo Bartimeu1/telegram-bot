@@ -1,12 +1,12 @@
 import schedule from 'node-schedule';
 import Task from '@models/taskModel.js';
 
-// Rules for a schedule
-const rule = new schedule.RecurrenceRule();
-rule.tz = 'Europe/Moscow';
-rule.minute = new schedule.Range(0, 59);
-
 const taskSchedule = (bot) => {
+  // Rules for a schedule
+  const rule = new schedule.RecurrenceRule();
+  rule.tz = 'Europe/Moscow';
+  rule.minute = new schedule.Range(0, 59);
+
   // Callback tasks schedule
   schedule.scheduleJob(rule, async () => {
     const currentDate = new Date();

@@ -2,10 +2,17 @@ import { Scenes } from 'telegraf';
 
 import getTodaysTasks from '@services/task/getTodaysTasks.js';
 import getAllTasks from '@services/task/getAllTasks.js';
-
-import dateFormatting from '../utils/dateFormatting.js';
+import { errorMessages, taskMessages } from '@constants/text.js';
 
 const tasksScene = new Scenes.BaseScene('TASKS_SERVICE');
+
+const dateOptions = {
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+};
 
 tasksScene.enter((ctx) => {
   ctx.reply('Что нужно сделать? 🫡', {
@@ -31,23 +38,20 @@ tasksScene.action('showAll', async (ctx) => {
   try {
     const data = await getAllTasks();
 
-    // Check if there are no tasks
     if (data.length === 0) {
-      ctx.reply('Ваш список задач 🚨');
+      ctx.reply(taskMessages.emptyTasks);
       return ctx.scene.leave();
     }
 
     const formattedData = data.reduce(
-      (acc, task) => (acc += `📝 ${task.text}\n🕐 ${dateFormatting(task.date)}\n\n`),
+      (acc, task) =>
+        (acc += `📝 ${task.text}\n🕐 ${task.date.toLocaleString('ru-RU', dateOptions)}\n\n`),
       'Ваши задачи:\n',
     );
 
     ctx.reply(formattedData);
-    ctx.scene.leave();
   } catch (error) {
-    console.log('Ошибка при выводе всех задач', error);
-    ctx.reply('Что-то пошло не так 😔\nПовторите попытку позже');
-    ctx.scene.leave();
+    ctx.reply(errorMessages.error);
   }
   ctx.scene.leave();
 });
@@ -58,22 +62,21 @@ tasksScene.action('showTodays', async (ctx) => {
 
     // Check if there are no tasks
     if (data.length === 0) {
-      ctx.reply('Ваш список задач на сегодня пуст 🚨');
+      ctx.reply(taskMessages.emptyTasks);
       return ctx.scene.leave();
     }
 
     const formattedData = data.reduce(
-      (acc, task) => (acc += `📝 ${task.text}\n🕐 ${dateFormatting(task.date)}\n\n`),
+      (acc, task) =>
+        (acc += `📝 ${task.text}\n🕐 ${task.date.toLocaleString('ru-RU', dateOptions)}\n\n`),
       'Ваши задачи на сегодня:\n',
     );
 
     ctx.reply(formattedData);
-    ctx.scene.leave();
-  } catch (error) {
-    console.log('Ошибка при выводе задач на сегодня', error);
-    ctx.reply('Что-то пошло не так 😔\nПовторите попытку позже');
-    ctx.scene.leave();
+  } catch (err) {
+    ctx.reply(errorMessages.error);
   }
+  ctx.scene.leave();
 });
 
 export default tasksScene;

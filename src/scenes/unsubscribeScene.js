@@ -1,16 +1,15 @@
 import { Scenes } from 'telegraf';
 
-import isSubscribed from '@services/subscriber/isSubscribed.js';
+import checkIfSubscribed from '@services/subscriber/checkIfSubscribed.js';
 import deleteSubscriber from '@services/subscriber/deleteSubscriber.js';
+import { errorMessages, statusMessages, subscribeMessages } from '@constants/text.js';
 
 const unsubscribeScene = new Scenes.BaseScene('UNSUBSCRIBE_USER');
 
 unsubscribeScene.enter(async (ctx) => {
   // Check if user is not subscribed
-  if (!(await isSubscribed(ctx.message.chat.id))) {
-    ctx.reply(
-      'Вы ещё не подписаны на ежедневные уведомления о погоде\nЧтобы это сделать, введите команду /subscribe',
-    );
+  if (!(await checkIfSubscribed(ctx.message.chat.id))) {
+    ctx.reply(subscribeMessages.notSubscribed);
     ctx.scene.leave();
   } else {
     ctx.reply(`Вы уверены, что хотите отписаться?`, {
@@ -27,17 +26,21 @@ unsubscribeScene.enter(async (ctx) => {
 });
 
 unsubscribeScene.action('unsubscribe', async (ctx) => {
-  ctx.editMessageReplyMarkup();
+  try {
+    ctx.editMessageReplyMarkup();
 
-  const deletedObj = await deleteSubscriber(ctx.update.callback_query.from.id);
-  ctx.reply(`🌑 Ваша подписка по городу ${deletedObj.city} отменена 🌑`);
+    const deletedObj = await deleteSubscriber(ctx.update.callback_query.from.id);
+    ctx.reply(`🌑 Ваша подписка по городу ${deletedObj.city} отменена 🌑`);
+  } catch (err) {
+    ctx.reply(errorMessages.error);
+  }
   ctx.scene.leave();
 });
 
 unsubscribeScene.action('cancel', (ctx) => {
   ctx.editMessageReplyMarkup();
-  
-  ctx.reply('Вы отменили действие\nУведомления продолжат поступать');
+
+  ctx.reply(statusMessages.cancel);
   ctx.scene.leave();
 });
 

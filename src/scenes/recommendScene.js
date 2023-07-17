@@ -3,22 +3,21 @@ import { Scenes } from 'telegraf';
 
 const recommendScene = new Scenes.BaseScene('RECOMMEND');
 
+import { recommendMessages } from '@constants/text';
+
 recommendScene.enter((ctx) => {
-  ctx.reply(
-    'Я могу предложить тебе список достопримечательностей, событий или же ресторанов в городе.\nВыбери свои путь, воин 🥷',
-    {
-      reply_markup: {
-        inline_keyboard: [
-          [{ text: 'Достопримечательности 🏰', callback_data: 'landmarks' }],
-          [
-            { text: 'События 👔', callback_data: 'events' },
-            { text: 'Еда 🥩', callback_data: 'places' },
-          ],
+  ctx.reply(recommendMessages.enter, {
+    reply_markup: {
+      inline_keyboard: [
+        [{ text: 'Достопримечательности 🏰', callback_data: 'landmarks' }],
+        [
+          { text: 'События 👔', callback_data: 'events' },
+          { text: 'Еда 🥩', callback_data: 'places' },
         ],
-        resize_keyboard: true,
-      },
+      ],
+      resize_keyboard: true,
     },
-  );
+  });
 });
 
 recommendScene.action('landmarks', (ctx) => {

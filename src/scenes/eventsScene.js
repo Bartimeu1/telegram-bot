@@ -1,12 +1,13 @@
 import { Scenes } from 'telegraf';
 
+import getEvents from '@root/api/getEvents.js';
 import { countryRegex } from '@constants/regex.js';
-import getEvents from '@services/api/getEvents.js';
+import { errorMessages, eventMessages } from '@constants/text.js';
 
 const eventsScene = new Scenes.WizardScene(
   'GET_EVENTS',
   (ctx) => {
-    ctx.reply('Введите страну на латинском. Пример: Belarus/USA');
+    ctx.reply(eventMessages.enter);
 
     return ctx.wizard.next();
   },
@@ -15,16 +16,14 @@ const eventsScene = new Scenes.WizardScene(
       const country = ctx.update.message.text;
       // Checking if date is in the correct format
       if (!countryRegex.test(country)) {
-        return ctx.reply(
-          '⛔️ Страна введена в неправильном формате! ⛔️\nОбратите внимание, принимаются только латинские символы',
-        );
+        return ctx.reply(errorMessages.validation);
       }
 
       const data = await getEvents(country);
 
       // Checking if data is not defined
       if (!data || data.length === 0) {
-        ctx.reply('Не могу найти данных по введённой стране 😔\n');
+        ctx.reply(errorMessages.noDataMessage);
         return ctx.scene.leave();
       }
 
@@ -35,9 +34,9 @@ const eventsScene = new Scenes.WizardScene(
         return currentDate <= targetDate;
       });
 
-      // Checking if holidays are found
-      if (filteredData.length === 0) {
-        ctx.reply('По моим данным, в этой стране ничего не ожидается 🧐\n');
+      // Checking if holidays are not found
+      if (!filteredData) {
+        ctx.reply(errorMessages.noDataMessage);
         return ctx.scene.leave();
       }
 
@@ -48,14 +47,10 @@ const eventsScene = new Scenes.WizardScene(
       }, '');
 
       ctx.reply(formattedData);
-      ctx.scene.leave();
-    } catch (error) {
-      console.log('Ошибка при получении событий', error);
-      ctx.reply(
-        'Что-то пошло не так 😔\nПопробуйте ввести другой город или повторите попытку позже',
-      );
-      ctx.scene.leave();
+    } catch (err) {
+      ctx.reply(errorMessages.errorMessage);
     }
+    ctx.scene.leave();
   },
 );
 

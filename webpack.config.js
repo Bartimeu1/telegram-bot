@@ -14,6 +14,7 @@ const config = {
   target: 'node',
   resolve: {
     alias: {
+      '@root': path.resolve(__dirname, './src'),
       '@models': path.resolve(__dirname, './src/models'),
       '@services': path.resolve(__dirname, './src/services'),
       '@constants': path.resolve(__dirname, './src/constants'),
@@ -21,7 +22,7 @@ const config = {
   },
 };
 
-export default (env, argv) => {
+export default (argv) => {
   if (argv.mode === 'production') {
     config.mode = 'production';
     config.devtool = 'source-map';

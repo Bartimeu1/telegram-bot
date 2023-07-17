@@ -1,6 +1,6 @@
 import schedule from 'node-schedule';
 import Subscriber from '@models/subscriberModel.js';
-import getWeather from '@services/api/getWeather.js';
+import getWeather from '@root/api/getWeather.js';
 
 // Rules for a schedule
 const rule = new schedule.RecurrenceRule();
