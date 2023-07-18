@@ -10,7 +10,7 @@
     "start:dev": "nodemon ./dist/dev-bundle.cjs",
     "start:prod": "node ./dist/main.cjs",
     "prepare": "husky install",
-    "worker": "npm i && npm run build && npm run start:prod"
+    "worker": "npm run prepare && npm i && npm run build && npm run start:prod"
   },
   "keywords": [],
   "author": "",
