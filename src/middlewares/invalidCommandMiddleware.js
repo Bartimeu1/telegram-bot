@@ -5,6 +5,7 @@ const invalidCommandMiddleware = (ctx, next) => {
   if (message?.startsWith('/')) {
     ctx.reply(errorMessages.invalidCommand);
     ctx.scene.leave();
+    console.log(ctx.scene.current)
     return;
   }
   next();

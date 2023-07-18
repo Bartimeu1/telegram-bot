@@ -6,7 +6,6 @@ import {
   statusMessages,
   subscribeMessages,
 } from '@constants/text';
-import invalidCommandMiddleware from '@middlewares/invalidCommandMiddleware.js';
 import getWeather from '@root/api/getWeather.js';
 import addSubscriber from '@services/subscriber/addSubscriber.js';
 import checkIfSubscribed from '@services/subscriber/checkIfSubscribed.js';
@@ -86,7 +85,5 @@ subscribeScene.action('cancel', (ctx) => {
   ctx.reply(statusMessages.cancel);
   ctx.scene.leave();
 });
-
-subscribeScene.use(invalidCommandMiddleware);
 
 export default subscribeScene;
