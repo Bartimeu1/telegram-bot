@@ -1,10 +1,15 @@
 import { Scenes } from 'telegraf';
 
+import { timeRegex } from '@constants/regex.js';
+import {
+  errorMessages,
+  statusMessages,
+  subscribeMessages,
+} from '@constants/text';
+import invalidCommandMiddleware from '@middlewares/invalidCommandMiddleware.js';
+import getWeather from '@root/api/getWeather.js';
 import addSubscriber from '@services/subscriber/addSubscriber.js';
 import checkIfSubscribed from '@services/subscriber/checkIfSubscribed.js';
-import getWeather from '@root/api/getWeather.js';
-import { timeRegex } from '@constants/regex.js';
-import { errorMessages, subscribeMessages, statusMessages } from '@constants/text';
 
 const subscribeScene = new Scenes.WizardScene(
   'SUBSCRIBE_USER',
@@ -20,7 +25,9 @@ async function checkSubscription(ctx) {
   } else {
     ctx.reply(subscribeMessages.subscribe, {
       reply_markup: {
-        inline_keyboard: [[{ text: '❌ Отменить задачу ❌', callback_data: 'cancel' }]],
+        inline_keyboard: [
+          [{ text: '❌ Отменить задачу ❌', callback_data: 'cancel' }],
+        ],
       },
     });
   }
@@ -37,7 +44,9 @@ async function enterCity(ctx) {
   if (!data) {
     return ctx.reply(errorMessages.noData, {
       reply_markup: {
-        inline_keyboard: [[{ text: '❌ Отменить задачу ❌', callback_data: 'cancel' }]],
+        inline_keyboard: [
+          [{ text: '❌ Отменить задачу ❌', callback_data: 'cancel' }],
+        ],
       },
     });
   }
@@ -59,7 +68,11 @@ async function saveSubscriber(ctx) {
     const [hours, minutes] = inputTime.split(':');
     const timeInMinutes = parseInt(hours) * 60 + parseInt(minutes);
 
-    addSubscriber(ctx.message.from.id, ctx.scene.session.subscriber.city, timeInMinutes);
+    addSubscriber(
+      ctx.message.from.id,
+      ctx.scene.session.subscriber.city,
+      timeInMinutes,
+    );
     ctx.reply(subscribeMessages.subscribeSuccess);
   } catch (err) {
     ctx.reply(errorMessages.error);
@@ -73,5 +86,7 @@ subscribeScene.action('cancel', (ctx) => {
   ctx.reply(statusMessages.cancel);
   ctx.scene.leave();
 });
+
+subscribeScene.use(invalidCommandMiddleware);
 
 export default subscribeScene;

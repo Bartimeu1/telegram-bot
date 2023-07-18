@@ -1,7 +1,8 @@
 import { Scenes } from 'telegraf';
 
-import getPlaces from '@root/api/getPlaces.js';
 import { errorMessages } from '@constants/text';
+import invalidCommandMiddleware from '@middlewares/invalidCommandMiddleware.js';
+import getPlaces from '@root/api/getPlaces.js';
 
 const placesScene = new Scenes.WizardScene(
   'GET_PLACE',
@@ -31,5 +32,7 @@ const placesScene = new Scenes.WizardScene(
     ctx.scene.leave();
   },
 );
+
+placesScene.use(invalidCommandMiddleware);
 
 export default placesScene;

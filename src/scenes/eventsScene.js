@@ -1,8 +1,9 @@
 import { Scenes } from 'telegraf';
 
-import getEvents from '@root/api/getEvents.js';
 import { countryRegex } from '@constants/regex.js';
 import { errorMessages, eventMessages } from '@constants/text.js';
+import invalidCommandMiddleware from '@middlewares/invalidCommandMiddleware.js';
+import getEvents from '@root/api/getEvents.js';
 
 const eventsScene = new Scenes.WizardScene(
   'GET_EVENTS',
@@ -21,7 +22,6 @@ const eventsScene = new Scenes.WizardScene(
 
       const data = await getEvents(country);
 
-      // Checking if data is not defined
       if (!data || data.length === 0) {
         ctx.reply(errorMessages.noDataMessage);
         return ctx.scene.leave();
@@ -34,7 +34,6 @@ const eventsScene = new Scenes.WizardScene(
         return currentDate <= targetDate;
       });
 
-      // Checking if holidays are not found
       if (!filteredData) {
         ctx.reply(errorMessages.noDataMessage);
         return ctx.scene.leave();
@@ -53,5 +52,7 @@ const eventsScene = new Scenes.WizardScene(
     ctx.scene.leave();
   },
 );
+
+eventsScene.use(invalidCommandMiddleware);
 
 export default eventsScene;

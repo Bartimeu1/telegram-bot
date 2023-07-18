@@ -1,9 +1,9 @@
-export { default as weatherScene } from './weatherScene.js';
-export { default as subscribeScene } from './subscribeScene.js';
-export { default as unsubscribeScene } from './unsubscribeScene.js';
-export { default as tasksScene } from './tasksScene.js';
 export { default as addTaskScene } from './addTaskScene.js';
-export { default as recommendScene } from './recommendScene.js';
 export { default as eventsScene } from './eventsScene.js';
-export { default as placesScene } from './placesScene.js';
 export { default as landmarksScene } from './landmarksScene.js';
+export { default as placesScene } from './placesScene.js';
+export { default as recommendScene } from './recommendScene.js';
+export { default as subscribeScene } from './subscribeScene.js';
+export { default as tasksScene } from './tasksScene.js';
+export { default as unsubscribeScene } from './unsubscribeScene.js';
+export { default as weatherScene } from './weatherScene.js';

@@ -1,4 +1,5 @@
 import schedule from 'node-schedule';
+
 import Task from '@models/taskModel.js';
 
 const taskSchedule = (bot) => {
@@ -11,7 +12,9 @@ const taskSchedule = (bot) => {
   schedule.scheduleJob(rule, async () => {
     const currentDate = new Date();
     try {
-      const reminderTasks = await Task.find({ callDate: { $lte: currentDate } });
+      const reminderTasks = await Task.find({
+        callDate: { $lte: currentDate },
+      });
       if (reminderTasks) {
         for (const reminderTask of reminderTasks) {
           await bot.telegram.sendMessage(
@@ -19,7 +22,10 @@ const taskSchedule = (bot) => {
             `Напоминание! ⏰\n${reminderTask.text}`,
           );
         }
-        await Task.updateMany({ callDate: { $lte: currentDate } }, { $unset: { callDate: '' } });
+        await Task.updateMany(
+          { callDate: { $lte: currentDate } },
+          { $unset: { callDate: '' } },
+        );
       }
 
       await Task.deleteMany({ date: { $lte: currentDate } });

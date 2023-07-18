@@ -5,9 +5,12 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "webpack --mode development --watch",
-    "build": "webpack --mode production",
-    "start": "nodemon ./dist/bundle.cjs"
+    "dev": "webpack --config webpack.dev.js --mode development --watch",
+    "build": "webpack --config webpack.prod.js --mode production",
+    "start:dev": "nodemon ./dist/dev-bundle.cjs",
+    "start:prod": "node ./dist/main.cjs",
+    "prepare": "husky install",
+    "worker": "npm run build && npm run start:prod"
   },
   "keywords": [],
   "author": "",
@@ -22,12 +25,24 @@
   },
   "devDependencies": {
     "eslint": "^8.45.0",
+    "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.8.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
     "nodemon": "^2.0.22",
     "prettier": "^3.0.0",
     "terser-webpack-plugin": "^5.3.9",
     "webpack": "^5.88.1",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1"
+    "webpack-dev-server": "^4.15.1",
+    "webpack-merge": "^5.9.0"
+  },
+  "lint-staged": {
+    "**/*.js": [
+      "eslint --fix",
+      "prettier --write --ignore-unknown"
+    ]
   }
 }

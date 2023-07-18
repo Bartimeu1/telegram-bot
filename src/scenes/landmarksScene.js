@@ -1,7 +1,8 @@
 import { Scenes } from 'telegraf';
 
-import getLandmarks from '@root/api/getLandmarks.js';
 import { errorMessages } from '@constants/text';
+import invalidCommandMiddleware from '@middlewares/invalidCommandMiddleware.js';
+import getLandmarks from '@root/api/getLandmarks.js';
 
 const landmarksScene = new Scenes.WizardScene(
   'GET_LANDMARKS',
@@ -31,5 +32,7 @@ const landmarksScene = new Scenes.WizardScene(
     ctx.scene.leave();
   },
 );
+
+landmarksScene.use(invalidCommandMiddleware);
 
 export default landmarksScene;

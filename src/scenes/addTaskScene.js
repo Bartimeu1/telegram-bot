@@ -1,8 +1,13 @@
 import { Scenes } from 'telegraf';
 
-import addTask from '@services/task/addTask.js';
 import { dateRegex } from '@constants/regex.js';
-import { errorMessages, taskMessages, statusMessages } from '@constants/text.js';
+import {
+  errorMessages,
+  statusMessages,
+  taskMessages,
+} from '@constants/text.js';
+import invalidCommandMiddleware from '@middlewares/invalidCommandMiddleware.js';
+import addTask from '@services/task/addTask.js';
 
 const addTaskScene = new Scenes.WizardScene(
   'ADD_TASK',
@@ -13,23 +18,14 @@ const addTaskScene = new Scenes.WizardScene(
   setReminder,
 );
 
-// const middleware = (ctx, next) => {
-//   const message = ctx.message?.text;
-//   if (message?.startsWith('/')) {
-//     ctx.reply(
-//       'Введена недопустимая команда, заканчиваю прошлый процесс\nПовторите действие ещё раз',
-//     );
-//     ctx.scene.leave();
-//   }
-//   next();
-// };
-
-// addTaskScene.use(middleware);
+addTaskScene.use(invalidCommandMiddleware);
 
 function enterTaskText(ctx) {
   ctx.reply('📝 Введите текст задачи 📝', {
     reply_markup: {
-      inline_keyboard: [[{ text: '❌ Отменить действие ❌', callback_data: 'cancel' }]],
+      inline_keyboard: [
+        [{ text: '❌ Отменить действие ❌', callback_data: 'cancel' }],
+      ],
     },
   });
   ctx.scene.session.task = {};
@@ -66,7 +62,7 @@ function enterTaskDate(ctx) {
   // Adding tasks date
   ctx.scene.session.task.date = inputDateObject;
 
-  ctx.reply(`Хотите установить напоминание?`, {
+  ctx.reply('Хотите установить напоминание?', {
     reply_markup: {
       inline_keyboard: [
         [

@@ -1,8 +1,13 @@
 import { Scenes } from 'telegraf';
 
+import {
+  errorMessages,
+  statusMessages,
+  subscribeMessages,
+} from '@constants/text.js';
+import invalidCommandMiddleware from '@middlewares/invalidCommandMiddleware.js';
 import checkIfSubscribed from '@services/subscriber/checkIfSubscribed.js';
 import deleteSubscriber from '@services/subscriber/deleteSubscriber.js';
-import { errorMessages, statusMessages, subscribeMessages } from '@constants/text.js';
 
 const unsubscribeScene = new Scenes.BaseScene('UNSUBSCRIBE_USER');
 
@@ -12,7 +17,7 @@ unsubscribeScene.enter(async (ctx) => {
     ctx.reply(subscribeMessages.notSubscribed);
     ctx.scene.leave();
   } else {
-    ctx.reply(`Вы уверены, что хотите отписаться?`, {
+    ctx.reply('Вы уверены, что хотите отписаться?', {
       reply_markup: {
         inline_keyboard: [
           [
@@ -29,7 +34,9 @@ unsubscribeScene.action('unsubscribe', async (ctx) => {
   try {
     ctx.editMessageReplyMarkup();
 
-    const deletedObj = await deleteSubscriber(ctx.update.callback_query.from.id);
+    const deletedObj = await deleteSubscriber(
+      ctx.update.callback_query.from.id,
+    );
     ctx.reply(`🌑 Ваша подписка по городу ${deletedObj.city} отменена 🌑`);
   } catch (err) {
     ctx.reply(errorMessages.error);
@@ -43,5 +50,7 @@ unsubscribeScene.action('cancel', (ctx) => {
   ctx.reply(statusMessages.cancel);
   ctx.scene.leave();
 });
+
+unsubscribeScene.use(invalidCommandMiddleware);
 
 export default unsubscribeScene;

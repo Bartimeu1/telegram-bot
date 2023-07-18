@@ -1,11 +1,10 @@
 import { Input } from 'telegraf';
 
-import { helpMessages, errorMessages } from '@constants/text.js';
-
-import isUserRegistered from '@services/user/isUserRegistered.js';
-import addUser from '@services/user/addUser.js';
+import { errorMessages, helpMessages } from '@constants/text.js';
 import getRandomCat from '@root/api/getRandomCat.js';
 import getRandomDog from '@root/api/getRandomDog.js';
+import addUser from '@services/user/addUser.js';
+import isUserRegistered from '@services/user/isUserRegistered.js';
 
 export const startCommand = async (ctx) => {
   try {
@@ -31,7 +30,7 @@ export const catCommand = async (ctx) => {
     await ctx.replyWithPhoto(Input.fromURL(image));
   } catch (err) {
     console.log(err);
-    ctx.reply(errorMessage);
+    ctx.reply(errorMessages.error);
   }
 };
 
@@ -41,26 +40,19 @@ export const dogCommand = async (ctx) => {
     await ctx.replyWithPhoto(Input.fromURL(image));
   } catch (err) {
     console.log(err);
-    ctx.reply(errorMessage);
+    ctx.reply(errorMessages.error);
   }
 };
 
-export const weatherCommand = async (ctx) => {
-  return ctx.scene.enter('GET_WEATHER_BY_CITY');
-};
+export const weatherCommand = async (ctx) =>
+  ctx.scene.enter('GET_WEATHER_BY_CITY');
 
-export const subscribeCommand = async (ctx) => {
-  return ctx.scene.enter('SUBSCRIBE_USER');
-};
+export const subscribeCommand = async (ctx) =>
+  ctx.scene.enter('SUBSCRIBE_USER');
 
-export const unsubscribeCommand = async (ctx) => {
-  return ctx.scene.enter('UNSUBSCRIBE_USER');
-};
+export const unsubscribeCommand = async (ctx) =>
+  ctx.scene.enter('UNSUBSCRIBE_USER');
 
-export const taskCommand = async (ctx) => {
-  return ctx.scene.enter('TASKS_SERVICE');
-};
+export const taskCommand = async (ctx) => ctx.scene.enter('TASKS_SERVICE');
 
-export const recommendCommand = async (ctx) => {
-  return ctx.scene.enter('RECOMMEND');
-};
+export const recommendCommand = async (ctx) => ctx.scene.enter('RECOMMEND');

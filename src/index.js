@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
-import setupBot from './bot.js';
+
 import options from '@root/config.js';
+import setupBot from './bot.js';
 
 (async function () {
   try {

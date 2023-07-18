@@ -1,0 +1,55 @@
+{
+  "extends": [
+    "prettier",
+    "eslint:recommended",
+    "airbnb-base",
+    "plugin:import/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 13,
+    "sourceType": "module"
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["@root", "./src"],
+          ["@models", "./src/models"],
+          ["@services", "./src/services"],
+          ["@constants", "./src/constants"],
+          ["@middlewares", "./src/middlewares"]
+        ]
+      }
+    }
+  },
+  "plugins": ["simple-import-sort"],
+  "rules": {
+    "quotes": ["error", "single"],
+    "indent": ["warn", 2],
+    "comma-dangle": ["error", "always-multiline"],
+    "semi": ["warn", "always"],
+    "no-extraneous-dependencies": "off",
+    "import/extensions": ["error", "ignorePackages", {
+      "js": "always"
+    }],
+    "no-console": "off",
+    "no-use-before-define": "off",
+    "radix": "off",
+    "no-return-await": "off",
+    "consistent-return": "off",
+    "no-await-in-loop": "off",
+    "no-return-assign": "off",
+    "no-param-reassign": "off",
+    "no-restricted-syntax": "off",
+    "simple-import-sort/imports": [
+      "error",
+      {
+        "groups": [
+          ["^\\w"],
+          ["^@", "^\\."]
+        ]
+      }
+    ],
+    "simple-import-sort/exports": "error"
+  }
+}

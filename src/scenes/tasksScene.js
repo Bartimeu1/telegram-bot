@@ -1,8 +1,9 @@
 import { Scenes } from 'telegraf';
 
-import getTodaysTasks from '@services/task/getTodaysTasks.js';
-import getAllTasks from '@services/task/getAllTasks.js';
 import { errorMessages, taskMessages } from '@constants/text.js';
+import invalidCommandMiddleware from '@middlewares/invalidCommandMiddleware.js';
+import getAllTasks from '@services/task/getAllTasks.js';
+import getTodaysTasks from '@services/task/getTodaysTasks.js';
 
 const tasksScene = new Scenes.BaseScene('TASKS_SERVICE');
 
@@ -45,7 +46,10 @@ tasksScene.action('showAll', async (ctx) => {
 
     const formattedData = data.reduce(
       (acc, task) =>
-        (acc += `📝 ${task.text}\n🕐 ${task.date.toLocaleString('ru-RU', dateOptions)}\n\n`),
+        (acc += `📝 ${task.text}\n🕐 ${task.date.toLocaleString(
+          'ru-RU',
+          dateOptions,
+        )}\n\n`),
       'Ваши задачи:\n',
     );
 
@@ -68,7 +72,10 @@ tasksScene.action('showTodays', async (ctx) => {
 
     const formattedData = data.reduce(
       (acc, task) =>
-        (acc += `📝 ${task.text}\n🕐 ${task.date.toLocaleString('ru-RU', dateOptions)}\n\n`),
+        (acc += `📝 ${task.text}\n🕐 ${task.date.toLocaleString(
+          'ru-RU',
+          dateOptions,
+        )}\n\n`),
       'Ваши задачи на сегодня:\n',
     );
 
@@ -78,5 +85,7 @@ tasksScene.action('showTodays', async (ctx) => {
   }
   ctx.scene.leave();
 });
+
+tasksScene.use(invalidCommandMiddleware);
 
 export default tasksScene;

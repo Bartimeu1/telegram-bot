@@ -1,9 +1,9 @@
-import axios from 'axios';
 import { Scenes } from 'telegraf';
 
-const recommendScene = new Scenes.BaseScene('RECOMMEND');
-
 import { recommendMessages } from '@constants/text';
+import invalidCommandMiddleware from '@middlewares/invalidCommandMiddleware.js';
+
+const recommendScene = new Scenes.BaseScene('RECOMMEND');
 
 recommendScene.enter((ctx) => {
   ctx.reply(recommendMessages.enter, {
@@ -34,5 +34,7 @@ recommendScene.action('events', (ctx) => {
   ctx.scene.enter('GET_EVENTS');
   ctx.scene.leave();
 });
+
+recommendScene.use(invalidCommandMiddleware);
 
 export default recommendScene;

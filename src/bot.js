@@ -1,33 +1,33 @@
-import { Scenes, Telegraf, session } from 'telegraf';
+import { Scenes, session, Telegraf } from 'telegraf';
 import rateLimit from 'telegraf-ratelimit';
 
 import options from '@root/config.js';
-
 import {
-  startCommand,
-  helpCommand,
   catCommand,
   dogCommand,
-  weatherCommand,
-  subscribeCommand,
-  unsubscribeCommand,
-  taskCommand,
+  helpCommand,
   recommendCommand,
+  startCommand,
+  subscribeCommand,
+  taskCommand,
+  unsubscribeCommand,
+  weatherCommand,
 } from './controllers/commands.js';
-
 import {
-  weatherScene,
-  subscribeScene,
-  unsubscribeScene,
-  tasksScene,
+  taskSchedule,
+  weatherSchedule,
+} from './controllers/schedules/index.js';
+import {
   addTaskScene,
-  recommendScene,
   eventsScene,
-  placesScene,
   landmarksScene,
+  placesScene,
+  recommendScene,
+  subscribeScene,
+  tasksScene,
+  unsubscribeScene,
+  weatherScene,
 } from './scenes/index.js';
-
-import { weatherSchedule, taskSchedule } from './controllers/schedules/index.js';
 
 const bot = new Telegraf(options.botToken);
 
@@ -46,7 +46,7 @@ const stage = new Scenes.Stage([
 const limitConfig = {
   window: 3000,
   limit: 1,
-  onLimitExceeded: (ctx, next) => {
+  onLimitExceeded: (ctx) => {
     ctx.reply('Не так быстро');
   },
 };
