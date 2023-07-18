@@ -1,1 +1,1 @@
-worker: npm run worker
+worker: npm install --dev && npm run worker 

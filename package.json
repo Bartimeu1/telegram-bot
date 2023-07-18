@@ -9,7 +9,7 @@
     "build": "webpack --config webpack.prod.js --mode production",
     "start:dev": "nodemon ./dist/dev-bundle.cjs",
     "start:prod": "node ./dist/main.cjs",
-    "worker": "npm i && npm run build && npm run start:prod"
+    "worker": "npm run build && npm run start:prod"
   },
   "keywords": [],
   "author": "",
