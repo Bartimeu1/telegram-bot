@@ -29,7 +29,6 @@ export const catCommand = async (ctx) => {
     const image = await getRandomCat();
     await ctx.replyWithPhoto(Input.fromURL(image));
   } catch (err) {
-    console.log(err);
     ctx.reply(errorMessages.error);
   }
 };
@@ -39,19 +38,15 @@ export const dogCommand = async (ctx) => {
     const image = await getRandomDog();
     await ctx.replyWithPhoto(Input.fromURL(image));
   } catch (err) {
-    console.log(err);
     ctx.reply(errorMessages.error);
   }
 };
 
-export const weatherCommand = async (ctx) =>
-  ctx.scene.enter('GET_WEATHER_BY_CITY');
+export const weatherCommand = async (ctx) => ctx.scene.enter('GET_WEATHER_BY_CITY');
 
-export const subscribeCommand = async (ctx) =>
-  ctx.scene.enter('SUBSCRIBE_USER');
+export const subscribeCommand = async (ctx) => ctx.scene.enter('SUBSCRIBE_USER');
 
-export const unsubscribeCommand = async (ctx) =>
-  ctx.scene.enter('UNSUBSCRIBE_USER');
+export const unsubscribeCommand = async (ctx) => ctx.scene.enter('UNSUBSCRIBE_USER');
 
 export const taskCommand = async (ctx) => ctx.scene.enter('TASKS_SERVICE');
 

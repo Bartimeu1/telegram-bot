@@ -1,9 +1,10 @@
 import { Scenes } from 'telegraf';
 
+import sceneIds from '@constants/sceneIds';
 import { recommendMessages } from '@constants/text';
 import invalidCommandMiddleware from '@middlewares/invalidCommandMiddleware.js';
 
-const recommendScene = new Scenes.BaseScene('RECOMMEND');
+const recommendScene = new Scenes.BaseScene(sceneIds.recommend);
 
 recommendScene.enter((ctx) => {
   ctx.reply(recommendMessages.enter, {

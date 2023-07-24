@@ -1,11 +1,5 @@
 import User from '@models/userModel.js';
 
-const isUserRegistered = async (chatID) => {
-  try {
-    return await User.findOne({ chatID });
-  } catch (error) {
-    console.log('Ошибка при обращении к БД', error);
-  }
-};
+const isUserRegistered = async (chatID) => await User.findOne({ chatID });
 
 export default isUserRegistered;

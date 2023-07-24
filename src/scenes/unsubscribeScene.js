@@ -1,5 +1,6 @@
 import { Scenes } from 'telegraf';
 
+import sceneIds from '@constants/sceneIds';
 import {
   errorMessages,
   statusMessages,
@@ -9,10 +10,9 @@ import invalidCommandMiddleware from '@middlewares/invalidCommandMiddleware.js';
 import checkIfSubscribed from '@services/subscriber/checkIfSubscribed.js';
 import deleteSubscriber from '@services/subscriber/deleteSubscriber.js';
 
-const unsubscribeScene = new Scenes.BaseScene('UNSUBSCRIBE_USER');
+const unsubscribeScene = new Scenes.BaseScene(sceneIds.unsubscribe);
 
 unsubscribeScene.enter(async (ctx) => {
-  // Check if user is not subscribed
   if (!(await checkIfSubscribed(ctx.message.chat.id))) {
     ctx.reply(subscribeMessages.notSubscribed);
     ctx.scene.leave();

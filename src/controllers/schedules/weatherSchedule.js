@@ -1,20 +1,19 @@
 import schedule from 'node-schedule';
 
+import { errorMessages } from '@constants/text.js';
+import { MAX_MINUTE, MIN_MINUTE, MINUTES_IN_HOUR } from '@constants/time.js';
 import Subscriber from '@models/subscriberModel.js';
 import getWeather from '@root/api/getWeather.js';
 
-// Rules for a schedule
-const rule = new schedule.RecurrenceRule();
-rule.tz = 'Europe/Moscow';
-rule.minute = new schedule.Range(0, 59);
-
 const weatherSchedule = async (bot) => {
+  const rule = new schedule.RecurrenceRule();
+  rule.tz = 'Europe/Moscow';
+  rule.minute = new schedule.Range(MIN_MINUTE, MAX_MINUTE);
+
   schedule.scheduleJob(rule, () => {
     try {
-      // Calculating time in minutes
       const currentDate = new Date();
-      const timeInMinutes =
-        currentDate.getHours() * 60 + currentDate.getMinutes();
+      const timeInMinutes = currentDate.getHours() * MINUTES_IN_HOUR + currentDate.getMinutes();
 
       Subscriber.find({ callTime: { $eq: timeInMinutes } }).then(
         (subscribers) => {
@@ -42,7 +41,7 @@ const weatherSchedule = async (bot) => {
         },
       );
     } catch (err) {
-      console.log('Ошибка при рассылке погоды', err);
+      console.log(errorMessages.weatherForecast, err);
     }
   });
 };

@@ -1,6 +1,7 @@
 import { Scenes } from 'telegraf';
 
 import { dateRegex } from '@constants/regex.js';
+import sceneIds from '@constants/sceneIds';
 import {
   errorMessages,
   statusMessages,
@@ -10,7 +11,7 @@ import invalidCommandMiddleware from '@middlewares/invalidCommandMiddleware.js';
 import addTask from '@services/task/addTask.js';
 
 const addTaskScene = new Scenes.WizardScene(
-  'ADD_TASK',
+  sceneIds.addTask,
   enterTaskText,
   validateTaskText,
   enterTaskDate,
@@ -21,13 +22,7 @@ const addTaskScene = new Scenes.WizardScene(
 addTaskScene.use(invalidCommandMiddleware);
 
 function enterTaskText(ctx) {
-  ctx.reply('📝 Введите текст задачи 📝', {
-    reply_markup: {
-      inline_keyboard: [
-        [{ text: '❌ Отменить действие ❌', callback_data: 'cancel' }],
-      ],
-    },
-  });
+  ctx.reply('📝 Введите текст задачи 📝');
   ctx.scene.session.task = {};
 
   return ctx.wizard.next();
@@ -51,7 +46,6 @@ function enterTaskDate(ctx) {
   if (!dateRegex.test(inputDate)) {
     return ctx.reply(errorMessages.validation);
   }
-  // Check if date is not from the past
   const [day, month, year, hours, minutes] = inputDate.match(/\d+/g);
   const inputDateObject = new Date(year, month - 1, day, hours, minutes);
   const currentDate = new Date();
@@ -59,7 +53,6 @@ function enterTaskDate(ctx) {
     return ctx.reply(errorMessages.pastDate);
   }
 
-  // Adding tasks date
   ctx.scene.session.task.date = inputDateObject;
 
   ctx.reply('Хотите установить напоминание?', {

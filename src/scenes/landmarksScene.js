@@ -1,11 +1,12 @@
 import { Scenes } from 'telegraf';
 
-import { errorMessages } from '@constants/text';
+import sceneIds from '@constants/sceneIds';
+import { errorMessages, statusMessages } from '@constants/text';
 import invalidCommandMiddleware from '@middlewares/invalidCommandMiddleware.js';
 import getLandmarks from '@root/api/getLandmarks.js';
 
 const landmarksScene = new Scenes.WizardScene(
-  'GET_LANDMARKS',
+  sceneIds.landmarks,
   (ctx) => {
     ctx.reply('Введите название города');
 
@@ -14,9 +15,11 @@ const landmarksScene = new Scenes.WizardScene(
   async (ctx) => {
     try {
       const city = ctx.update.message.text;
+      ctx.reply(statusMessages.wait);
+
       const data = await getLandmarks(city);
 
-      if (data.length === 0) {
+      if (!data.length) {
         return ctx.reply(errorMessages.noData);
       }
 
@@ -27,7 +30,7 @@ const landmarksScene = new Scenes.WizardScene(
 
       ctx.reply(formattedData);
     } catch (err) {
-      ctx.reply(errorMessages.error);
+      return ctx.reply(errorMessages.noData);
     }
     ctx.scene.leave();
   },

@@ -1,14 +1,14 @@
 import schedule from 'node-schedule';
 
+import { errorMessages } from '@constants/text.js';
+import { MAX_MINUTE, MIN_MINUTE } from '@constants/time.js';
 import Task from '@models/taskModel.js';
 
 const taskSchedule = (bot) => {
-  // Rules for a schedule
   const rule = new schedule.RecurrenceRule();
   rule.tz = 'Europe/Moscow';
-  rule.minute = new schedule.Range(0, 59);
+  rule.minute = new schedule.Range(MIN_MINUTE, MAX_MINUTE);
 
-  // Callback tasks schedule
   schedule.scheduleJob(rule, async () => {
     const currentDate = new Date();
     try {
@@ -30,7 +30,7 @@ const taskSchedule = (bot) => {
 
       await Task.deleteMany({ date: { $lte: currentDate } });
     } catch (err) {
-      console.log('Ошибка при рассылке уведомлений', err);
+      console.log(errorMessages.taskForecast, err);
     }
   });
 };

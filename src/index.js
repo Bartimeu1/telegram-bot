@@ -17,4 +17,4 @@ import setupBot from './bot.js';
   } catch (error) {
     console.log('Ошибка запуска', error);
   }
-})();
+}());
