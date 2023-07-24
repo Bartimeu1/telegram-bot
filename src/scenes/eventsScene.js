@@ -1,12 +1,17 @@
 import { Scenes } from 'telegraf';
 
 import { countryRegex } from '@constants/regex.js';
-import { errorMessages, eventMessages } from '@constants/text.js';
+import sceneIds from '@constants/sceneIds';
+import {
+  errorMessages,
+  eventMessages,
+  statusMessages,
+} from '@constants/text.js';
 import invalidCommandMiddleware from '@middlewares/invalidCommandMiddleware.js';
 import getEvents from '@root/api/getEvents.js';
 
 const eventsScene = new Scenes.WizardScene(
-  'GET_EVENTS',
+  sceneIds.events,
   (ctx) => {
     ctx.reply(eventMessages.enter);
 
@@ -15,19 +20,18 @@ const eventsScene = new Scenes.WizardScene(
   async (ctx) => {
     try {
       const country = ctx.update.message.text;
-      // Checking if date is in the correct format
       if (!countryRegex.test(country)) {
         return ctx.reply(errorMessages.validation);
       }
+      ctx.reply(statusMessages.wait);
 
       const data = await getEvents(country);
 
-      if (!data || data.length === 0) {
+      if (!data || !data.length) {
         ctx.reply(errorMessages.noDataMessage);
         return ctx.scene.leave();
       }
 
-      // Filtering past holidays
       const currentDate = new Date();
       const filteredData = data.filter((holiday) => {
         const targetDate = new Date(holiday.date);
@@ -39,7 +43,6 @@ const eventsScene = new Scenes.WizardScene(
         return ctx.scene.leave();
       }
 
-      // Formatting data for telegram message
       const formattedData = filteredData.reduce((acc, holiday) => {
         acc += `🚗 Название: ${holiday.name}\n📅 Дата: ${holiday.date}\n\n`;
         return acc;
@@ -47,7 +50,7 @@ const eventsScene = new Scenes.WizardScene(
 
       ctx.reply(formattedData);
     } catch (err) {
-      ctx.reply(errorMessages.errorMessage);
+      return ctx.reply(errorMessages.noData);
     }
     ctx.scene.leave();
   },

@@ -5,11 +5,11 @@ import options from '@root/config.js';
 const getWeather = async (city) => {
   try {
     const url = `${options.weatherUrl}=${city}&appid=${options.weatherApiKey}`;
-    const response = await axios({ url, method: 'get' });
+    const response = await axios.get(url);
 
     return response.data;
-  } catch (error) {
-    console.log('Ошибка при отправке запроса', error);
+  } catch (err) {
+    return err;
   }
 };
 
